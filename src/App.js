@@ -1,15 +1,24 @@
-import React, { useState} from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import './App.css';
-
-
 import { Card, Button, Form } from "react-bootstrap";
+
+const firstTitle = document.title;
 
 function App() {
   const [counter1, setCounter1] = useState(0);
-  const [counter2, setCounter2] = useState("")
 
-  // const [field1, setField1] = useState("");
+  const [counter2, setCounter2] = useState("")
+  useEffect(() => {
+    console.log("useEffect", counter2);
+    if (field)
+      document.title = field;
+    else document.title = firstTitle;
+  });
+
+
+  const [field, setField] = useState("");
+  const fiedlRef = useRef(null);
 
   const clickFunc1 = () => {
     // console.log("counter1 before:", counter1);
@@ -17,35 +26,37 @@ function App() {
     // setTimeout(() => {
     //   console.log("counter1 after +1s:", counter1);
     // }, 1000);
-    //*** it seems at the end of the function the setCounter is goinna perform, even though set a time, the value is the old one
+    //*** it seems at the end of the function the setCounter is gonna perform, even though set a time, the value is the old one
   }
 
   const clickFunc2 = () => {
-    setCounter2(counter2 - 3);
+    if (counter2 !== "")
+      setCounter2(counter2 - 3);
+    else{
+      if (field)
+        setCounter2(field - 3);
+      else {
+        setCounter2(<span style={{color: "green", fontWeight:"bolder"}}>need to specify above</span>);
+        setTimeout(() => {
+          setCounter2("");
+          fiedlRef.current.focus();
+        }, 1500);
+      }
+    }
   }
 
-  const handleFocus = () => {
-
-  }
 
   const handleChange = event => {
-    console.log("inside handleChange", !!Number(event.target.value));
-    if (!Number(event.target.value))
-      setCounter2(event.target.value);
-      // [event.target.value] = ""
+    if (!!Number(event.target.value))
+      setField(event.target.value);
+    else if (event.target.value === "")
+      setField("");
   }
 
   const updateValue = event => {
-    console.log("*inside updateValue", counter2);
-    console.log("*event", event.target.name, event.target.value);
     if (event.key === "Enter") {
       setCounter2(event.target.value);
-     console.log("Enter!!") ;
     }
-    if (Number(event.target.value))
-      console.log(event.target.value, "is a number")
-    else
-      console.log(event.target.value, "is NOT a number");
   }
 
   return (
@@ -75,15 +86,17 @@ function App() {
             type          = "text"
             placeholder   = "Type a initial value"
             name          = "counter2"
-            onFocus       = { handleFocus }
-            onChange      = { handleChange}
-            value         = { counter2 }
-            // onKeyPress    = { updateValue }
-            onKeyUp       = { updateValue}
+            onChange      = { handleChange }
+            onKeyPress    = { updateValue }
+            value         = { field }
+            ref           = { fiedlRef }
           />
           <br />
           <Form.Label>
-            Counting: { counter2 || "<no value at all>" }
+            Counting: { (counter2 >= 0 
+                ? <span style={{color: "blue", fontWeight: "bold"}}>{counter2}</span> 
+                : <span style={{color: "red" , fontWeight: "bold"}}>{counter2}</span>  )
+              || "<no value at all>" }
           </Form.Label>
         </Card.Body>
         <Button

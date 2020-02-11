@@ -4,6 +4,7 @@ import './App.css';
 import Card1 from "./FirstComponent.js";
 import Card2 from "./SecondComponent.js";
 import Card3 from "./ThirdComponent.js";
+import SysHeader from "./SysHeader.js";
 
 const firstTitle = document.title;
 
@@ -11,6 +12,7 @@ function App() {
 
   return (
     <div className="form-position">
+      <SysHeader />
       <Card1 />
       <Card2 
         firstTitle  = { firstTitle}

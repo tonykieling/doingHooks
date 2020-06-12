@@ -1,11 +1,17 @@
 import React from 'react'
-import { Nav } from "react-bootstrap";
+import { Nav, Navbar } from "react-bootstrap";
 
 export default function SysHeader() {
   return (
     // <div>
-      <Nav
-        activeKey="/home"
+      // <Nav
+      <Navbar
+        // activeKey="/home"
+        sticky  = {"top"}
+        // style   = {{background: "red"}}
+        bg      = "info"
+        // style={{position: "sticky", top: "0px", width: "100%", zIndex: 999}}
+
         onSelect={selectedKey => alert(`selected ${selectedKey}`)}
       >
         <Nav.Item>
@@ -22,7 +28,8 @@ export default function SysHeader() {
             Disabled
           </Nav.Link>
         </Nav.Item>
-      </Nav>      
+      {/* </Nav> */}
+      </Navbar>
     // </div>
   )
 }

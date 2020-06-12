@@ -11,13 +11,15 @@ const firstTitle = document.title;
 function App() {
 
   return (
-    <div className="form-position">
+    <div>
       <SysHeader />
-      <Card1 />
-      <Card2 
-        firstTitle  = { firstTitle}
-      />
-      <Card3 />
+      <div className="form-position">
+        <Card1 />
+        <Card2 
+          firstTitle  = { firstTitle}
+        />
+        <Card3 />
+      </div>
     </div>
   );
 }

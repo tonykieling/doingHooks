@@ -113,7 +113,7 @@ export default function ThirdComponent() {
   }
 
   useEffect(() => {
-    console.log("this message will run olny once");
+    // console.log("this message will run olny once");
     // console.log("add:", add(1, 2));
 
     // function add(x , y) {
